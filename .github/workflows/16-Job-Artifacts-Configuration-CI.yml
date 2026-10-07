@@ -9,9 +9,9 @@ env :
 on : 
   push : 
     branches : [develop,master]
-  paths : 
-    - '16-Job-Artifacts-Configuration-CI.yml'
-    - '16-Job-Artifacts-Configuration-CI-Workflow/*'
+    paths : 
+      - '16-Job-Artifacts-Configuration-CI.yml'
+      - '16-Job-Artifacts-Configuration-CI-Workflow/**'
 
 jobs : 
   upload-artifact-job :
