@@ -4,71 +4,73 @@ name: "📦 [Workflow-16] Job Artifacts Configuration"
 
 run-name: "📦 [Workflow-16] ${{ github.actor }} → Sharing Build Artifacts Between Jobs"
 
-env : 
-  APP_ARTIFACT_NAME : "Node-JS App Build File"
-on : 
-  push : 
-    branches : [develop,master]
-    paths : 
-      - '16-Job-Artifacts-Configuration-CI.yml'
+env:
+  APP_ARTIFACT_NAME: "Node-JS App Build File"
+
+on:
+  push:
+    branches:
+      - develop
+      - master
+    paths:
+      - '.github/workflows/16-Job-Artifacts-Configuration-CI.yml'
       - '16-Job-Artifacts-Configuration-CI-Workflow/**'
 
-jobs : 
-  upload-artifact-job :
-    name : Node-Js Upload Artifacts Job
+jobs:
+  upload-artifact-job:
+    name: Node-Js Upload Artifacts Job
 
-    runs-on :  ubuntu-latest
+    runs-on: ubuntu-latest
 
-    env : 
-      NODE_VERSION : '24'
-    steps : 
-      - name : Checkout the Repository
-        uses : actions/checkout@v6
+    env:
+      NODE_VERSION: '24'
 
-      - name :  Setup Node JS Environment
-        uses : actions/setup-node@v7
-        with : 
-          node-version : ${{env.NODE_VERSION}}
-      
-      - name : Install Depenedency and Build
-        run : |
-          echo "Running the NOde Js App Before the Upload Artifacts uplod !!!"
-          npm install
-          npm run build
-      
-      - name : Upload App Artifacts 
-        uses : actions/upload-artifact@v4
-        with :
-          name : ${{env.APP_ARTIFACT_NAME}}
-          path : |
-           package.json
-           build.js
-  
-  download-artifact-job : 
-    name : Node Js Download Artifacts Job
+    steps:
+      - name: Checkout the Repository
+        uses: actions/checkout@v6
 
-    runs-on :  ubuntu-latest
+      - name: Setup Node JS Environment
+        uses: actions/setup-node@v7
+        with:
+          node-version: ${{ env.NODE_VERSION }}
 
-    needs : upload-artifact-job
-
-    env :
-      NODE_VERSION : '24'
-
-    steps : 
-      - name : Download App Artifacts
-        uses : actions/download-artifact@v4
-        with : 
-          name : ${{env.APP_ARTIFACT_NAME}}
-
-      - name : Setup the Node JS Environment
-        uses : actions/setup-node@v7
-        with : 
-          node-version : ${{env.NODE_VERSION}}
-      
-      - name : Run the Artifacts Code Files
-        run : |
+      - name: Install Dependency and Build
+        working-directory: 16-Job-Artifacts-Configuration-CI-Workflow
+        run: |
+          echo "Running the Node JS App Before the Upload Artifacts Upload !!!"
           npm install
           npm run build
 
+      - name: Upload App Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.APP_ARTIFACT_NAME }}
+          path: |
+            16-Job-Artifacts-Configuration-CI-Workflow/package.json
+            16-Job-Artifacts-Configuration-CI-Workflow/build.js
 
+  download-artifact-job:
+    name: Node Js Download Artifacts Job
 
+    runs-on: ubuntu-latest
+
+    needs: upload-artifact-job
+
+    env:
+      NODE_VERSION: '24'
+
+    steps:
+      - name: Download App Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ env.APP_ARTIFACT_NAME }}
+
+      - name: Setup the Node JS Environment
+        uses: actions/setup-node@v7
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Run the Artifacts Code Files
+        run: |
+          npm install
+          npm run build
