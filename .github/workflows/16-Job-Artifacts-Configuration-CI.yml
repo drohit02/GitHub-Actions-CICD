@@ -33,7 +33,7 @@ jobs :
       - name : Install Depenedency and Build
         run : |
           echo "Running the NOde Js App Before the Upload Artifacts uplod !!!"
-          npm Install
+          npm install
           npm run build
       
       - name : Upload App Artifacts 
@@ -67,7 +67,7 @@ jobs :
       
       - name : Run the Artifacts Code Files
         run : |
-          npm Install
+          npm install
           npm run build
 
 
