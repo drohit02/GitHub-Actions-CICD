@@ -40,8 +40,8 @@ jobs :
         uses : actions/upload-artifact@v4
         with :
           name : ${{env.APP_ARTIFACT_NAME}}
-          path : 
-            - 'build.js'
+          path : |
+           'build.js'
   
   download-artifact-job : 
     name : Node Js Download Artifacts Job
