@@ -64,13 +64,22 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: ${{ env.APP_ARTIFACT_NAME }}
+          path: deployment-artifact
+
+      - name: Display Downloaded Artifacts
+        run: |
+          echo "Downloaded Application Artifacts:"
+          ls -la deployment-artifact
 
       - name: Setup the Node JS Environment
         uses: actions/setup-node@v7
         with:
           node-version: ${{ env.NODE_VERSION }}
 
-      - name: Run the Artifacts Code Files
-        run: |
-          npm install
-          npm run build
+      - name: Install Dependencies
+        working-directory: deployment-artifact
+        run: npm install
+
+      - name: Run the Downloaded Artifact
+        working-directory: deployment-artifact
+        run: npm run build
