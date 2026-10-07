@@ -41,7 +41,8 @@ jobs :
         with :
           name : ${{env.APP_ARTIFACT_NAME}}
           path : |
-           'build.js'
+           package.json
+           build.js
   
   download-artifact-job : 
     name : Node Js Download Artifacts Job
