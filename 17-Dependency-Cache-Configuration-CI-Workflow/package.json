@@ -1,5 +1,5 @@
 {
-    "name" : "Job-Artifacts-Configuration-CI-WorkFlow",
+    "name" : "Job-Depedency-Cache-Configuration-CI-WorkFlow",
     "version"  : "1.2.1",
     "scripts": {
         "build" : "node build.js",
