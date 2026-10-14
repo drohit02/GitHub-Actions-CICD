@@ -4,45 +4,53 @@ name: "⚡ [Workflow-17] Dependency Cache Configuration"
 
 run-name: "⚡ [Workflow-17] ${{ github.actor }} → Running CI with Dependency Cache"
 
-env : 
-  NODE_DEPENDENCY_CACHE_IDENTIFIER : 'MyNodeAppDependecy'
-  NODE_DEPENDENCY_CACHE_NAME : "AppDependecy"
+env:
+  NODE_DEPENDENCY_CACHE_NAME: "AppDependency"
 
-on : 
-  push : 
-    branches : [develop,master]
-    paths :
+on:
+  push:
+    branches:
+      - develop
+      - master
+    paths:
       - '.github/workflows/17-Dependency-Cache-Configuration-CI.yml'
       - '17-Dependency-Cache-Configuration-CI-Workflow/**'
 
 jobs:
   build-job:
-    name : Node JS App Build App
+    name: Node JS App Build App
+    runs-on: ubuntu-latest
 
-    runs-on :  ubuntu-latest
+    steps:
+      - name: Checkout the Code
+        uses: actions/checkout@v4
 
-    steps : 
+      - name: Setup Node JS Environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
 
-      - name : Checkcout the Code
-        uses : actions/checkout@v4
-      
-      - name : Cache the Node Js Dependency
-        id : ${{env.NODE_DEPENDENCY_CACHE_IDENTIFIER}}
-        uses : actions/cache@v4
-        with : 
-          path : ~/.npm
-          key : ${{runner.os}}-${{env.NODE_DEPENDENCY_CACHE_NAME}}-${{hashFiles{**/package-lock.json}}}
+      - name: Cache the Node JS Dependency
+        id: MyNodeAppDependencyIdentifier
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-${{ env.NODE_DEPENDENCY_CACHE_NAME }}-${{ hashFiles('17-Dependency-Cache-Configuration-CI-Workflow/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ env.NODE_DEPENDENCY_CACHE_NAME }}-
 
-      - name : List the Node Modules Dependency
-        run : cd 17-Dependency-Cache-Configuration-CI-Workflow && npm List
+      - name: List the Node Modules Dependency
+        working-directory: 17-Dependency-Cache-Configuration-CI-Workflow
+        run: npm list
 
-      - name : Install the Dependency
-        run  : cd 17-Dependency-Cache-Configuration-CI-Workflow && npm Install
+      - name: Install the Dependency
+        working-directory: 17-Dependency-Cache-Configuration-CI-Workflow
+        run: npm install
 
-      - name : Run Node JS App Build
-        run :  cd 17-Dependency-Cache-Configuration-CI-Workflow && npm run build
+      - name: Run Node JS App Build
+        working-directory: 17-Dependency-Cache-Configuration-CI-Workflow
+        run: npm run build
 
-      - name : Run Node Js App Deploy
-        run : cd 17-Dependency-Cache-Configuration-CI-Workflow && npm run deploy
-
-      
+      - name: Run Node JS App Deploy
+        working-directory: 17-Dependency-Cache-Configuration-CI-Workflow
+        run: npm run deploy
