@@ -1,0 +1,14 @@
+# GitHub Actions: Matrix Strategy Configuration
+
+name: "🧩 [Workflow-18] Matrix Strategy Configuration"
+
+run-name: "🧩 [Workflow-18] ${{ github.actor }} → Testing Multiple Node.js Versions"
+
+on : 
+  push : 
+    branches : 
+      - 'develop'
+      - 'master'
+    paths : 
+      - '.github/Workflows/18-Matrix-Strategy-Configuration-CI.yml'
+      - '18-Matrix-Strategy-Configuration-CI-Workflow/**'
