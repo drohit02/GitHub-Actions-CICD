@@ -26,10 +26,11 @@ jobs :
     runs-on : ubuntu-latest
 
     strategy : 
-      node_version : [20,22,24]
+      matrix : 
+        node-version : ['20','22','24']
     
     env :
-      NODE_VERSION : matrix.node_version
+      NODE_VERSION : ${{matrix.node-version}}
     
     steps : 
 
