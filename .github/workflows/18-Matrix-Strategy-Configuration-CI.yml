@@ -44,7 +44,7 @@ jobs :
       
       - name : Install Dependecy 
         working-directory : "${{env.WORKING_DIRECTORY}}"
-        run :  npm Install
+        run :  npm install
       
       - name : Node JS Test Ruunner
         working-directory : ${{env.WORKING_DIRECTORY}}
