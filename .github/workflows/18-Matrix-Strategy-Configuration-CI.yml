@@ -25,7 +25,7 @@ jobs :
     
     runs-on : ubuntu-latest
 
-    Strategy : 
+    strategy : 
       node_version : [20,22,24]
     
     env :
