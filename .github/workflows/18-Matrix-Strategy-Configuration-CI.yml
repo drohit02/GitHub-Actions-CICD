@@ -1,0 +1,50 @@
+# GitHub Actions: Matrix Strategy Configuration
+
+name: "🧩 [Workflow-18] Matrix Strategy Configuration"
+
+run-name: "🧩 [Workflow-18] ${{ github.actor }} → Testing Multiple Node.js Versions"
+
+env : 
+  WORKING_DIRECTORY : '18-Matrix-Strategy-Configuration-CI-Workflow'
+
+on : 
+  push : 
+    branches : 
+      - 'develop'
+      - 'master'
+    paths : 
+      - '.github/Workflows/18-Matrix-Strategy-Configuration-CI.yml'
+      - '18-Matrix-Strategy-Configuration-CI-Workflow/**'
+
+
+jobs :
+  
+  test-job : 
+   
+    name : Node JS App Test Suite Ruunner
+    
+    runs-on : ubuntu-latest
+
+    Strategy : 
+      node_version : [20,22,24]
+    
+    env :
+      NODE_VERSION : matrix.node_version
+    
+    steps : 
+
+      - name :  Checkout the Code
+        uses : actions/Checkout@v4
+      
+      - name : Node Installation
+        uses : actions/setup-node@v7
+        with :
+          node-version : ${{env.NODE_VERSION}}
+      
+      - name : Install Dependecy 
+        working-directory : "${{env.WORKING_DIRECTORY}}"
+        run :  npm Install
+      
+      - name : Node JS Test Ruunner
+        working-directory : ${{env.WORKING_DIRECTORY}}
+        run : npm run test
