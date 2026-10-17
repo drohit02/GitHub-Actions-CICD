@@ -1,0 +1,7 @@
+{
+    "name" : "Matrix Strategy Configuation WorkFlow",
+    "version" : "1.2.1",
+    "scripts": {
+        "test" : "node test.js"
+    }
+}
