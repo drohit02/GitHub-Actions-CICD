@@ -44,7 +44,7 @@ jobs :
         run :  python3 -m pip install -r requirements.txt
 
       - name : Run the Test cases
-        workflow-directory : ${{ env.WORKING_DIRECTORY }}
+        working-directory : ${{ env.WORKING_DIRECTORY }}
         run : python3 -m pytest
 
       - name : Run the Python App
