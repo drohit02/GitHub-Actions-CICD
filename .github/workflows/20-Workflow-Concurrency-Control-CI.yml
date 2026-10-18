@@ -20,7 +20,7 @@ on :
       - 'master'
     paths : 
       - '.github/workflows/20-Workflow-Concurrency-Control-CI.yml'
-      - '20-Workflow-Concurrency-Control-CI-Workflow'
+      - '20-Workflow-Concurrency-Control-CI-Workflow/**'
 
 jobs : 
   test-job:
@@ -45,7 +45,7 @@ jobs :
 
       - name : Run the Test cases
         working-directory : ${{ env.WORKING_DIRECTORY }}
-        run : python3 -m pytest
+        run : python3 -m pytest -v
 
       - name : Run the Python App
         if : ${{ success() }}
