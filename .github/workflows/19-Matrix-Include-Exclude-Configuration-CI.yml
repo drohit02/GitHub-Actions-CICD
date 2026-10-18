@@ -14,7 +14,7 @@ on :
       - 'master'
     paths :
       - '19-Matrix-Include-Exclude-Configuration-CI-Workflow/**'
-      - '.github/workflows/.github/workflows/19-Matrix-Include-Exclude-Configuration-CI.yml' 
+      - '.github/workflows/19-Matrix-Include-Exclude-Configuration-CI.yml' 
 
 jobs : 
   Test-Job : 
