@@ -48,6 +48,7 @@ jobs :
         run : python3 -m pytest -v
 
       - name : Run the Python App
+        working-directory : ${{ env.WORKING_DIRECTORY }}
         if : ${{ success() }}
         run : python3 app.py
 
