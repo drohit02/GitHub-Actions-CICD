@@ -31,11 +31,11 @@ jobs :
         node-version : ['20','22','24']
         environment : ['development','production']
         exclude : 
-          node-version : ['20']
+          node-version : '20'
         include : 
-          - node-version : ['22']
+          - node-version : '22'
             environment : 'development'
-          - node-version : ['24']
+          - node-version : '24'
             environment : 'production'
 
     steps : 
