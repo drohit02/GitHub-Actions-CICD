@@ -1,0 +1,60 @@
+# GitHub Actions: Matrix Include and Exclude Configuration
+
+name: "🧩 [Workflow-19] Matrix Include and Exclude Configuration"
+
+run-name: "🧩 [Workflow-19] ${{ github.actor }} → Customizing Matrix Configurations"
+
+env : 
+  WORKING_DIRECTORY : '19-Matrix-Include-Exclude-Configuration-CI-Workflow'
+
+on : 
+  push :
+    branches : 
+      - 'develop'
+      - 'master'
+    paths :
+      - '19-Matrix-Include-Exclude-Configuration-CI-Workflow/**'
+      - '.github/workflows/.github/workflows/19-Matrix-Include-Exclude-Configuration-CI.yml' 
+
+jobs : 
+  Test-Job : 
+    name : Node JS Test Job 
+
+    runs-on : ubuntu-latest
+
+    env : 
+      NODE_VERSION : "${{ matrix.node-version }}"
+      ENVIRONMENT : "${{ matrix.environment }}"
+
+    strategy : 
+      matrix : 
+        node-version : ['20','22','24']
+        environment : ['development','production']
+        exclude : 
+          node-version : ['20']
+        include : 
+          - node-version : ['22']
+            environment : 'development'
+          - node-version : ['24']
+            environment : 'production'
+
+    step : 
+      - name : Checkout the Code
+        uses : actions/checkout@v6
+
+      - name : Setup Node JS Enironment
+        uses : actions/setup-node@v7
+        with :
+          node-version : "${{ env.NODE_VERSION }}"
+      
+      - name : Running Node JS App
+        working-directory : "${{ env.WORKING_DIRECTORY }}"
+        run : Running the Node JS with Version "${{ env.NODE_VERSION }}" in "${{ env.ENVIRONMENT }}"
+
+      - name : Install Node JS Dependency
+        working-directory : "{{ env.WORKING_DIRECTORY }}"
+        run :  npm install
+
+      - name : Running theNode JS Test Suite Runner
+        working-directory : "${{ env.WORKING_DIRECTORY }}"
+        run : npm run test
