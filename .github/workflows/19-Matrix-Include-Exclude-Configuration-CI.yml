@@ -38,7 +38,7 @@ jobs :
           - node-version : ['24']
             environment : 'production'
 
-    step : 
+    steps : 
       - name : Checkout the Code
         uses : actions/checkout@v6
 
