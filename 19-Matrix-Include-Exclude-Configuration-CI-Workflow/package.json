@@ -1,0 +1,7 @@
+{
+    "name" : "Matrix Strategy with the Include-Exclude Filter Configuation WorkFlow",
+    "version" : "1.2.1",
+    "scripts": {
+        "test" : "node test.js"
+    }
+}
